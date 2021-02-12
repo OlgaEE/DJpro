@@ -3,26 +3,42 @@ from django.shortcuts import render, redirect
 
 from .models import *
 
-menu = ["About This Site", "Add Article", "Fedback", "LogIn"]
+menu = [{'title': "About Sait", 'url_name': 'about'},
+        {'title': "Add Article", 'url_name': 'add_page'},
+        {'title': "FedBack", 'url_name': 'contact'},
+        {'title': "LogIn", 'url_name': 'login'}
+]
 
 def index(request):
     posts = Learnings.objects.all()
-    return render(request, 'learnings/index.html', {'posts': posts, 'menu': menu, 'title': 'Main Page'})
+    context = {
+        'posts': posts,
+        'menu': menu,
+        'title': 'Main Page'
+    }
+    return render(request, 'learnings/index.html', context=context)
 
 
 def about(request):
     return render(request, 'learnings/about.html', {'menu': menu, 'title': 'About This Site'})
 
 
-def categories(request, catid):
-    return HttpResponse(f"<h1>Learn by Categories</h1><p>{catid}</p>")
+def addpage(request):
+    return HttpResponse("Add Article")
 
 
-def archive(request, year):
-    if int(year) > 2020:
-        return redirect('home', permanent=False)
-    return HttpResponse(f"<h1>Archive by Years</h1><p>{year}</p>")
+def contact(request):
+    return HttpResponse("FedBack")
+
+
+def login(request):
+    return HttpResponse("LogIn")
+
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Page Not Found</h1>')
+
+
+def show_post(request, post_id):
+    return HttpResponse(f"Show article with id = {post_id}")
 
