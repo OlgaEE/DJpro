@@ -132,5 +132,3 @@ class LearningsCategory(ListView):
 #       'cat_selected': cat_id,
 #   }
 #   return render(request, 'learnings/index.html', context=context)
-
-
